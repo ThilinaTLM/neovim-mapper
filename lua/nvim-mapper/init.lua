@@ -67,4 +67,14 @@ M.qmap = {
 
 M.set_leader = function(key) vim.g.mapleader = key end
 
+M.def_command = function(name, command)
+    if type(command) == 'function' then
+        -- define neovim command
+        vim.cmd(string.format("command %s :lua (%s)()<CR>", name, mem_get_lua(mem_save(command))))
+    else
+        -- define neovim command
+        vim.cmd(string.format("command %s %s", name, command))
+    end
+end
+
 return M
